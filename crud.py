@@ -11,38 +11,40 @@ conn = mysql.connector.connect(
 )
 cursor = conn.cursor()
 
-# Crear un jedi
-def create_jedi(nombre_jedi, email_jedi):
-    cursor.execute("INSERT INTO jedi (nombre_jedi, email_jedi) VALUES (%s, %s)", 
-                   (nombre_jedi, email_jedi))
+# Crear un usuario
+def create_usuario (nombre_usuario, apellido_usuario, email_usuario):
+    cursor.execute("INSERT INTO usuario (nombre_usuario, apellido_usuario, email_usuario) VALUES (%s, %s)", 
+                   (nombre_usuario, apellido_usuario, email_usuario)
     conn.commit()
 
-# Leer todos los jedis
-def read_jedis():
-    cursor.execute("SELECT * FROM jedi")
+# Leer todos los usuarios
+def read_usuario():
+    cursor.execute("SELECT * FROM usuario")
     return cursor.fetchall()
 
-# Actualizar un jedi
-def update_jedi(id_jedi, nombre_jedi, email_jedi):
-    cursor.execute("UPDATE jedi SET nombre_jedi=%s, email_jedi=%s WHERE id_jedi=%s", 
-                   (nombre_jedi, email_jedi, id_jedi))
+# Actualizar un usuario
+def update_jedi(id_usuario, nombre_usuario, apellido_usuario, email_usuario):
+    cursor.execute("UPDATE usuario SET nombre_usuario=%s, apeellido_usuario=%s, email_usuario=%s WHERE id_usuario=%s", 
+                   (nombre_usuario, apellido_usuario, email_usuario, id_usuario))
     conn.commit()
 
-# Eliminar un jedi
-def delete_jedi(id_jedi):
-    cursor.execute("DELETE FROM jedi WHERE id_jedi=%s", (id_jedi,))
+# Eliminar un usuario
+def delete_usuario(id_usuario):
+    cursor.execute("DELETE FROM usuario WHERE id_usuario=%s", (id_usuario,))
     conn.commit()
 
 # Ejemplo de uso
-create_jedi("Luke Skywalker", "luke@jedi.com")
-create_jedi("Obi-Wan Kenobi", "obiwan@jedi.com")
+create_usuario("Karen", "Varela", "karen@project.com")
+create_usuario("Dulce", "Limones", "dulce@project.com")
+create_usuario("Clara", "Rivera", "clara@project.com")
+create_usuario("Alejandro", "Morales", "alejandro@project.com")
 
-print("Jedis:", read_jedis())
+print("Usuarios:", read_usuarios())
 
-update_jedi(1, "Luke S.", "lukeskywalker@jedi.com")
-#delete_jedi(2)
+update_usuario(1, "Karen Cecilia","Varela Castro", "karen.varela@project.com")
+#delete_usuario(2)
 
-print("Jedis después de cambios:", read_jedis())
+print("usuarios después de cambios:", read_usuario())
 
 cursor.close()
 conn.close()
