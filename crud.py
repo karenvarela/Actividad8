@@ -13,7 +13,7 @@ cursor = conn.cursor()
 
 # Crear un usuario
 def create_usuario (nombre_usuario, apellido_usuario, email_usuario):
-    cursor.execute("INSERT INTO usuario (nombre_usuario, apellido_usuario, email_usuario) VALUES (%s, %s)", 
+    cursor.execute("INSERT INTO usuario (nombre_usuario, apellido_usuario, email_usuario) VALUES (%s, %s, %s)", 
                    (nombre_usuario, apellido_usuario, email_usuario))
     conn.commit()
 
@@ -23,7 +23,7 @@ def read_usuarios():
     return cursor.fetchall()
 
 # Actualizar un usuario
-def update_jedi(id_usuario, nombre_usuario, apellido_usuario, email_usuario):
+def update_usuario(id_usuario, nombre_usuario, apellido_usuario, email_usuario):
     cursor.execute("UPDATE usuario SET nombre_usuario=%s, apeellido_usuario=%s, email_usuario=%s WHERE id_usuario=%s", 
                    (nombre_usuario, apellido_usuario, email_usuario, id_usuario))
     conn.commit()
