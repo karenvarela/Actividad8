@@ -15,62 +15,62 @@ app = Flask(__name__)
 def get_db_connection():
     return mysql.connector.connect(**db_config)
 
-@app.route("/jedis", methods=["GET"])
-def get_jedis():
+@app.route("/usuarios", methods=["GET"])
+def get_usuarios():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM jedi")
-    jedis = cursor.fetchall()
+    cursor.execute("SELECT * FROM usuario")
+    usuarios = cursor.fetchall()
     cursor.close()
     conn.close()
-    return jsonify(jedis)
+    return jsonify(usuarios)
 
-@app.route("/jedis/<int:id_jedi>", methods=["GET"])
-def get_jedi(id_jedi):
+@app.route("/usuarios/<int:id_usuario>", methods=["GET"])
+def get_usuario(id_usuario):
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM jedi WHERE id_jedi = %s", (id_jedi,))
-    jedi = cursor.fetchone()
+    cursor.execute("SELECT * FROM usuario WHERE id_usuario = %s", (id_usuario,))
+    usuario = cursor.fetchone()
     cursor.close()
     conn.close()
-    if jedi:
-        return jsonify(jedi)
-    return jsonify({"error": "Jedi no encontrado"}), 404
+    if usuario:
+        return jsonify(usuario)
+    return jsonify({"error": "Usuario no encontrado"}), 404
 
-@app.route("/jedis", methods=["POST"])
-def create_jedi():
+@app.route("/usuarios", methods=["POST"])
+def create_usuario():
     data = request.json
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO jedi (nombre_jedi, email_jedi) VALUES (%s, %s)", 
-                   (data["nombre_jedi"], data["email_jedi"]))
+    cursor.execute("INSERT INTO usuario (nombre_usuario, apellido_usuario, email_usuario) VALUES (%s, %s)", 
+                   (data["nombre_usuario"], data["apellido_usuario"], data["email_usuario"]))
     conn.commit()
-    jedi_id = cursor.lastrowid
+    usuario_id = cursor.lastrowid
     cursor.close()
     conn.close()
-    return jsonify({"id_jedi": jedi_id, "message": "Jedi creado"})
+    return jsonify({"id_usuario": usuario_id, "message": "Usuario creado"})
 
-@app.route("/jedis/<int:id_jedi>", methods=["PUT"])
-def update_jedi(id_jedi):
+@app.route("/usuarios/<int:id_usuario>", methods=["PUT"])
+def update_usuario(id_usuario):
     data = request.json
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("UPDATE jedi SET nombre_jedi=%s, email_jedi=%s WHERE id_jedi=%s",
-                   (data["nombre_jedi"], data["email_jedi"], id_jedi))
+    cursor.execute("UPDATE usuario SET nombre_usuario=%s, apellido_usuario=%s, email_usuario=%s WHERE id_usuario=%s",
+                   (data["nombre_usuario"], data["apellido_usuario"], data["email_usuario"], id_usuario))
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Jedi actualizado"})
+    return jsonify({"message": "Usuarrio actualizado"})
 
-@app.route("/jedis/<int:id_jedi>", methods=["DELETE"])
-def delete_jedi(id_jedi):
+@app.route("/usuarios/<int:id_usuario>", methods=["DELETE"])
+def delete_usuario(id_usuario):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM jedi WHERE id_jedi=%s", (id_jedi,))
+    cursor.execute("DELETE FROM usuario WHERE id_usuario=%s", (id_usuario,))
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Jedi eliminado"})
+    return jsonify({"message": "Usuario eliminado"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
