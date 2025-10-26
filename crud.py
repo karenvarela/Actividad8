@@ -18,7 +18,7 @@ def create_usuario (nombre_usuario, apellido_usuario, email_usuario):
     conn.commit()
 
 # Leer todos los usuarios
-def read_usuario():
+def read_usuarios():
     cursor.execute("SELECT * FROM usuario")
     return cursor.fetchall()
 
@@ -44,7 +44,7 @@ print("Usuarios:", read_usuarios())
 update_usuario(1, "Karen Cecilia","Varela Castro", "karen.varela@project.com")
 #delete_usuario(2)
 
-print("usuarios después de cambios:", read_usuario())
+print("usuarios después de cambios:", read_usuarios())
 
 cursor.close()
 conn.close()
