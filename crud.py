@@ -14,7 +14,7 @@ cursor = conn.cursor()
 # Crear un usuario
 def create_usuario (nombre_usuario, apellido_usuario, email_usuario):
     cursor.execute("INSERT INTO usuario (nombre_usuario, apellido_usuario, email_usuario) VALUES (%s, %s)", 
-                   (nombre_usuario, apellido_usuario, email_usuario)
+                   (nombre_usuario, apellido_usuario, email_usuario))
     conn.commit()
 
 # Leer todos los usuarios
