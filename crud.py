@@ -24,7 +24,7 @@ def read_usuarios():
 
 # Actualizar un usuario
 def update_usuario(id_usuario, nombre_usuario, apellido_usuario, email_usuario):
-    cursor.execute("UPDATE usuario SET nombre_usuario=%s, apeellido_usuario=%s, email_usuario=%s WHERE id_usuario=%s", 
+    cursor.execute("UPDATE usuario SET nombre_usuario=%s, apellido_usuario=%s, email_usuario=%s WHERE id_usuario=%s", 
                    (nombre_usuario, apellido_usuario, email_usuario, id_usuario))
     conn.commit()
 
